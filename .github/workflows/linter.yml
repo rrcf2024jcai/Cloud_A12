@@ -1,0 +1,25 @@
+name: Lint Code Base
+
+# Trigger the workflow on push or pull request
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Full git history is needed to check checking diffs
+          fetch-depth: 0
+
+      # Step 2: Run Super-Linter
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
